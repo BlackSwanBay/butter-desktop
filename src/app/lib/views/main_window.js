@@ -70,10 +70,10 @@
             });
 
             // Application events
-            App.vent.on('movies:list', _.bind(this.showMovies, this));
-            App.vent.on('shows:list', _.bind(this.showShows, this));
-            App.vent.on('anime:list', _.bind(this.showAnime, this));
-            App.vent.on('indie:list', _.bind(this.showIndie, this));
+            App.vent.on('movies:list', _.bind(this.movieTabShow, this));
+            App.vent.on('shows:list', _.bind(this.tvshowTabShow, this));
+            App.vent.on('anime:list', _.bind(this.animeTabShow, this));
+            App.vent.on('indie:list', _.bind(this.indieTabShow, this));
             App.vent.on('favorites:list', _.bind(this.showFavorites, this));
             App.vent.on('favorites:render', _.bind(this.renderFavorites, this));
             App.vent.on('watchlist:list', _.bind(this.showWatchlist, this));
@@ -152,11 +152,22 @@
             // Set the app title (for Windows mostly)
             win.title = App.Config.title;
 
+            var status = new Backbone.Model({
+                status: i18n.__('Init Database'),
+                done: 0.05
+            });
             // Show loading modal on startup
             var that = this;
-            this.Content.show(new App.View.InitModal());
-            App.db.initialize()
+            this.Content.show(new App.View.InitModal({
+                model: status
+            }));
+
+            App.db.initialize(status)
                 .then(function () {
+                    status.set({
+                        status: i18n.__('Create Temp Folder'),
+                        done: 0.25
+                    });
 
                     // Create the System Temp Folder. This is used to store temporary data like movie files.
                     if (!fs.existsSync(Settings.tmpLocation)) {
@@ -170,6 +181,11 @@
                         });
                     }
 
+                    status.set({
+                        status: i18n.__('Set System Theme'),
+                        done: 0.30
+                    });
+
                     try {
                         fs.statSync('src/app/themes/' + Settings.theme + '.css');
                     } catch (e) {
@@ -182,10 +198,20 @@
                     // focus win. also handles AlwaysOnTop
                     App.vent.trigger('window:focus');
 
+                    status.set({
+                        status: i18n.__('Disclaimer'),
+                        done: 0.50
+                    });
+
                     // we check if the disclaimer is accepted
                     if (!AdvSettings.get('disclaimerAccepted')) {
                         that.showDisclaimer();
                     }
+
+                    status.set({
+                        status: i18n.__('Done'),
+                        done: 1
+                    });
 
                     that.InitModal.destroy();
 
@@ -196,16 +222,16 @@
                     } else if (Settings.startScreen === 'Favorites' || (lastOpen && Settings.lastTab === 'Favorites')) {
                         that.showFavorites();
                     } else if (Settings.startScreen === 'Torrent-collection' || (lastOpen && Settings.lastTab === 'Torrent-collection')) {
-                        that.showMovies(); //needed because Torrentcollection isnt a real collection
+                        that.movieTabShow(); //needed because Torrentcollection isnt a real collection
                         that.showTorrentCollection();
                     } else if (Settings.startScreen === 'TV Series' || (lastOpen && Settings.lastTab === 'TV Series')) {
-                        that.showShows();
+                        that.tvshowTabShow();
                     } else if (Settings.startScreen === 'Anime' || (lastOpen && Settings.lastTab === 'Anime')) {
-                        that.showAnime();
+                        that.animeTabShow();
                     } else if (Settings.startScreen === 'Indie' || (lastOpen && Settings.lastTab === 'Indie')) {
-                        that.showIndie();
+                        that.indieTabShow();
                     } else {
-                        that.showMovies();
+                        that.movieTabShow();
                     }
 
                     // do we celebrate events?
@@ -236,28 +262,28 @@
 
         },
 
-        showMovies: function (e) {
+        movieTabShow: function (e) {
             this.Settings.destroy();
             this.MovieDetail.destroy();
 
             this.Content.show(new App.View.MovieBrowser());
         },
 
-        showShows: function (e) {
+        tvshowTabShow: function (e) {
             this.Settings.destroy();
             this.MovieDetail.destroy();
 
             this.Content.show(new App.View.ShowBrowser());
         },
 
-        showAnime: function (e) {
+        animeTabShow: function (e) {
             this.Settings.destroy();
             this.MovieDetail.destroy();
 
             this.Content.show(new App.View.AnimeBrowser());
         },
 
-        showIndie: function (e) {
+        indieTabShow: function (e) {
             this.Settings.destroy();
             this.MovieDetail.destroy();
 
@@ -270,7 +296,7 @@
             this.Content.show(new App.View.InitModal());
             App.db.syncDB(function () {
                 that.InitModal.destroy();
-                that.showShows();
+                that.tvshowTabShow();
                 // Focus the window when the app opens
                 win.focus();
 

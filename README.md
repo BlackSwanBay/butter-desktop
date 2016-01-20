@@ -1,6 +1,8 @@
-# [Butter](https://github.com/butterproject/butter)
+# [Butter](https://github.com/butterproject/butter-desktop)
 
-[![Build Status](https://travis-ci.org/butterproject/butter.svg?branch=master)](https://travis-ci.org/butterproject/butter)
+[![Build Status](https://travis-ci.org/butterproject/butter-desktop.svg?branch=master)](https://travis-ci.org/butterproject/butter-desktop)
+[![Dependency Status](https://david-dm.org/butterproject/butter-desktop.svg)](https://david-dm.org/butterproject/butter-desktop)
+[![devDependency Status](https://david-dm.org/butterproject/butter-desktop/dev-status.svg)](https://david-dm.org/butterproject/butter-desktop#info=devDependencies)
 
 Allow any user to easily watch movies through torrent streaming, without any prerequisites.
 
@@ -10,7 +12,7 @@ Visit the project's website at <http://butterproject.org>.
 
 ## Getting Involved
 
-Want to report a bug, request a feature, contribute to or translate Butter? Check out our in-depth guide to [Contributing to Butter](CONTRIBUTING.md). We need all the help we can get! You can also join our [community](README.md#community) to keep up-to-date and meet other Butterrs.
+Want to report a bug, request a feature, contribute to or translate Butter? Check out our in-depth guide to [Contributing to Butter](CONTRIBUTING.md#contributing-to-butter). We need all the help we can get! You can also join our [community](README.md#community) to keep up-to-date and meet other Butterrs.
 
 ## Getting Started
 
@@ -18,7 +20,7 @@ If you're comfortable getting up and running from a `git clone`, this method is 
 
 If you clone the GitHub repository, you will need to build a number of assets using grunt.
 
-The [master](https://github.com/butterproject/butter) branch which contains the latest release.
+The [master](https://github.com/butterproject/butter-desktop) branch which contains the latest release.
 
 #### Quickstart:
 
@@ -40,7 +42,7 @@ If you encounter trouble with the above method, you can try:
 
 Optionally, you may simply run `./make_butter.sh` if you are on a linux or mac based operating system.
 
-Full instructions & troubleshooting tips can be found in the [Contributing Guide](CONTRIBUTING.md)
+Full instructions & troubleshooting tips can be found in the [Contributing Guide](CONTRIBUTING.md#contributing-to-butter)
 
 <a name="community"></a>
 ## Community
@@ -48,8 +50,8 @@ Full instructions & troubleshooting tips can be found in the [Contributing Guide
 Keep track of Butter development and community activity.
 
 * Follow Butter on [Twitter] (https://twitter.com/butterproject), [Facebook] (https://www.facebook.com/ButterProjectOrg/) and [Google+](https://plus.google.com/communities/111003619134556931561).
-* Read and subscribe to [The Official Butter Blog](https://github.com/butterproject/blog).
-* Join in discussions on the [Butter Forum](https://discuss.butterproject.org)
+* Read and subscribe to [The Official Butter Blog](http://blog.butterproject.org).
+* Join in discussions on the [Butter Forum](http://discuss.butterproject.org)
 * Connect with us on IRC at `#butterproject` on freenode ([web access](http://webchat.freenode.net/?channels=butterproject))
 
 ##Screenshots

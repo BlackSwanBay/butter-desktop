@@ -22,7 +22,7 @@ var parseBuildPlatforms = function (argumentPlatform) {
     // Do some scrubbing to make it easier to match in the regexes bellow
     inputPlatforms = inputPlatforms.replace("darwin", "mac");
     inputPlatforms = inputPlatforms.replace(/;ia|;x|;arm/, "");
-    if (process.arch === "x64") {
+    if (process.arch === "x64" && argumentPlatform === "") {
         inputPlatforms = inputPlatforms.replace("32", "64");
     }
 
@@ -310,11 +310,14 @@ module.exports = function (grunt) {
             setexecutable: {
                 command: function () {
                     if (host.linux || host.mac) {
-                        return [
-                            'pct_rel="build/releases/' + projectName + '"',
-                            'chmod -R +x ${pct_rel}/mac/' + projectName + '.app || : ',
-                            'chmod +x ${pct_rel}/linux*/' + projectName + '/' + projectName + ' || : '
-                        ].join(' && ');
+                        var cmds = ['pct_rel="build/' + projectName + '"'];
+                        if (buildPlatforms.mac32 || buildPlatforms.mac64) {
+                            cmds.push('chmod -R +x ${pct_rel}/osx*/' + projectName + '.app || : ');
+                        }
+                        if (buildPlatforms.linux32 || buildPlatforms.linux64) {
+                            cmds.push('chmod +x ${pct_rel}/linux*/' + projectName + ' || : ');
+                        }
+                        return cmds.join(' && ');
                     } else {
                         return 'echo ""'; // Not needed in Windows
                     }

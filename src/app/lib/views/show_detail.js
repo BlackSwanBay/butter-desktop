@@ -116,18 +116,8 @@
             });
         },
 
-        unbindKeyboardShortcuts: function () { // There should be a better way to do this
-            Mousetrap.unbind('w');
-            Mousetrap.unbind('f');
-            Mousetrap.unbind('q');
-            Mousetrap.unbind('up');
-            Mousetrap.unbind('down');
-            Mousetrap.unbind(['enter', 'space']);
-            Mousetrap.unbind(['esc', 'backspace']);
-            Mousetrap.unbind(['ctrl+up', 'command+up']);
-            Mousetrap.unbind(['ctrl+down', 'command+down']);
-        },
-
+        unbindKeyboardShortcuts: Mousetrap.reset,
+        
         onShow: function () {
             bookmarked = App.userBookmarks.indexOf(this.model.get('imdb_id')) !== -1;
 
@@ -787,7 +777,7 @@
             if (torrent.substring(0, 8) === 'magnet:?') {
                 // if 'magnet:?' is because TVApi sends back links, not magnets
 
-                torrent = torrent.split('&tr')[0] + '&tr=udp://tracker.openbittorrent.com:80/announce' + '&tr=udp://open.demonii.com:1337/announce' + '&tr=udp://tracker.coppersurfer.tk:6969';
+                torrent = torrent.split('&tr')[0] + '&tr=udp://tracker.openbittorrent.com:80/announce' + '&tr=udp://9.rarbg.com:2710/announce' + '&tr=udp://tracker.coppersurfer.tk:6969'+ '&tr=udp://tracker.publicbt.com:80/announce';
 
                 torrentHealth(torrent, {
                     timeout: 1000
